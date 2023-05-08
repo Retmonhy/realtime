@@ -3,6 +3,7 @@ import "./App.css";
 import { StoreContext } from ".";
 import { LongPolling } from "./components/LongPolling";
 import { EventSoursing } from "./components/EventSoursing";
+import { WebSock } from "./components/WebSock";
 
 function App() {
   const { user } = useContext(StoreContext);
@@ -12,7 +13,8 @@ function App() {
   return (
     <div className='container'>
       {/* <LongPolling /> */}
-      <EventSoursing />
+      {/* <EventSoursing /> */}
+      <WebSock />
     </div>
   );
 }

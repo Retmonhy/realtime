@@ -7,7 +7,7 @@
   "scripts": {
     "start:longpolling": "nodemon longpolling.js",
     "start:eventsoursing": "nodemon eventsoursing.js",
-    "start:websocket": "nodemon eventsoursing.js"
+    "start:websocket": "nodemon websocket.js"
   },
   "keywords": [],
   "author": "",

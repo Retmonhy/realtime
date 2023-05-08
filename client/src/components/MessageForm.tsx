@@ -1,11 +1,10 @@
-import React, { ChangeEvent, FC, useState, MouseEvent, KeyboardEvent, useContext } from "react";
-import { MessageService } from "../shared/api/services";
+import React, { ChangeEvent, FC, useState, MouseEvent, KeyboardEvent } from "react";
 import { observer } from "mobx-react-lite";
-import { StoreContext } from "..";
-interface IMessageFormProps {}
+interface IMessageFormProps {
+  onSend: (text: string) => void;
+}
 
-export const MessageForm: FC<IMessageFormProps> = observer(() => {
-  const { user } = useContext(StoreContext);
+export const MessageForm: FC<IMessageFormProps> = observer(({ onSend }) => {
   const [value, setValue] = useState<string>("");
   const changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     console.log("change");
@@ -19,11 +18,7 @@ export const MessageForm: FC<IMessageFormProps> = observer(() => {
   const sendMessageHandler = async (event: MouseEvent<HTMLButtonElement>) => sendMessage();
   const sendMessage = async () => {
     if (!value.length) return;
-    await MessageService.SendMessage({
-      id: Date.now(),
-      text: value,
-      user: { nickname: user.nickname, picture: user.picture, id: user.id },
-    });
+    onSend(value);
     setValue("");
   };
   return (
