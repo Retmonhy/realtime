@@ -1,27 +1,16 @@
 //modules
-const ws = require("ws");
-const http = require("http");
 const fetch = require("node-fetch");
 const express = require("express");
-const cors = require("cors");
+const middlewares = require("./middlewares");
+const wsserver = require("./WSServer");
 
-const PORT = 5000;
-
-const clients = new Set();
 const app = express();
-app.use(cors()).use(express.json());
-const expressServer = app.listen(PORT, () => "hhtp server have been started");
-const websocketServer = new ws.Server(
-  {
-    noServer: true,
-  },
-  () => console.log(`websocket server have been started on port: ${PORT}`)
-);
-expressServer.on("upgrade", (request, socket, head) => {
-  websocketServer.handleUpgrade(request, socket, head, (websocket) => {
-    websocketServer.emit("connection", websocket, request);
-  });
-});
+const PORT = 5000;
+// app.use(cors()).use(express.json());
+middlewares(app);
+const expressServer = app.listen(PORT, () => `Http server have been started on port ${PORT}`);
+wsserver(expressServer);
+
 app.get("/user/init", async (req, res) => {
   try {
     //получаем случайны ник
@@ -39,16 +28,4 @@ app.get("/user/init", async (req, res) => {
     console.log("error = ", error);
     res.status(500).json(JSON.stringify(error));
   }
-});
-
-websocketServer.on("connection", function (ws) {
-  clients.add(ws);
-  ws.on("message", (message) => {
-    //тут почему-то приходит в формате Buffer, поэтому вызываем toString
-    const stringMessage = message.toString();
-    for (let client of clients) {
-      client.send(stringMessage);
-    }
-  });
-  // ws.send("Пользователь подключился");
 });
