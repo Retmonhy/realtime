@@ -2,8 +2,7 @@ const ws = require("ws");
 
 //клиенты вебсокета
 const clients = new Set();
-
-module.exports = (expressServer) => {
+module.exports = (expressServer, onlineUsers) => {
   const websocketServer = new ws.Server({
     noServer: true,
   });
@@ -33,19 +32,52 @@ module.exports = (expressServer) => {
   //websocketConnection - открытое длительное сетевое соединение браузер - сервер
   //connectionRequest - HTTP запрос на открытие этого соединения
   websocketServer.on("connection", function (websocketConnection, connectionRequest) {
-    //так можно получить query параметры запроса. Тут не используется, но знать полезно
-    // const [_path, params] = connectionRequest?.url?.split("?");
-    // const connectionParams = queryString.parse(params); //тут какая-то либа парсит парамсы, но можно и ручками
+    const [_path, params] = connectionRequest?.url?.split("?");
+    const connectionParams = parseParams(params);
 
     clients.add(websocketConnection);
+    const connectedUser = onlineUsers.getUser(connectionParams.userId);
+
     websocketConnection.on("message", (message) => {
       //тут почему-то приходит в формате Buffer, поэтому вызываем toString
-      const stringMessage = message.toString();
+      let msg = JSON.parse(message.toString());
+      switch (msg.type) {
+        case "UserConnect":
+          const UCmessage = {
+            type: "UserConnect",
+            users: onlineUsers.users,
+          };
+          msg = UCmessage;
+          break;
+        case "ChatMessage":
+          break;
+      }
       for (let client of clients) {
-        client.send(stringMessage);
+        client.send(JSON.stringify(msg));
+      }
+    });
+    websocketConnection.on("close", (message) => {
+      if (connectedUser) {
+        onlineUsers.removeUser(connectedUser.id);
+        const msg = {
+          type: "UserConnect",
+          users: onlineUsers.users,
+        };
+        for (let client of clients) {
+          client.send(JSON.stringify(msg));
+        }
       }
     });
   });
 
   return websocketServer;
+};
+const parseParams = (params /*string*/) => {
+  const pairs = params.split("&");
+  const paramsObj = {};
+  pairs.forEach((pair) => {
+    const [key, value] = pair.split("=");
+    paramsObj[key] = value;
+  });
+  return paramsObj;
 };

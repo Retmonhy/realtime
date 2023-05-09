@@ -11,7 +11,7 @@ export const EventSoursing: FC<IEventSoursingProps> = () => {
   const { user } = useContext(StoreContext);
   const sendMessage = async (text: string) => {
     await MessageService.SendMessage({
-      id: Date.now(),
+      id: Date.now().toString(),
       text: text,
       user: { nickname: user.nickname, picture: user.picture, id: user.id },
     });
@@ -22,10 +22,8 @@ export const EventSoursing: FC<IEventSoursingProps> = () => {
   }, []);
   //тут подписывааемся на события, чтобы ссервер слал запрос, как только пользователь добавит новое сообщение
   const subscribe = async () => {
-    console.log("EventSoursing = ");
     const eventSource = new EventSource("http://localhost:5000/connect");
     eventSource.onmessage = function (event: MessageEvent) {
-      // console.log(event.data);
       const message = JSON.parse(event.data);
       setMessages((prev) => [message, ...prev]);
     };

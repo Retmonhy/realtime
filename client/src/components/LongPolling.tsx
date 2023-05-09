@@ -14,7 +14,7 @@ export const LongPolling: FC<ILongPollingProps> = () => {
   }, []);
   const sendMessage = async (text: string) => {
     await MessageService.SendMessage({
-      id: Date.now(),
+      id: Date.now().toString(),
       text: text,
       user: { nickname: user.nickname, picture: user.picture, id: user.id },
     });

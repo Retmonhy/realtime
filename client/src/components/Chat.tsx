@@ -8,7 +8,7 @@ interface IChatProps {
 export const Chat: FC<IChatProps> = ({ messages }) => {
   return (
     <div className='mform wrapper'>
-      <h3>Сообщения</h3>
+      <h4>Сообщения</h4>
       {messages.map((message) => (
         <Message message={message} key={message.id} />
       ))}

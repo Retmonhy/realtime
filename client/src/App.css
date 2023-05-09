@@ -26,13 +26,14 @@ html {
 }
 .wrapper {
   padding: 20px;
-  width: 80%;
   margin: 0 auto;
   border: 3px solid var(--main-color);
   border-radius: 8px;
 }
 .mform {
   margin-bottom: 20px;
+  max-height: 500px;
+  overflow-y: auto;
 }
 .mform__input {
   display: block;
@@ -59,33 +60,51 @@ html {
 
 .chat {
 }
-.message {
+.message,
+.chat-user {
   padding: 8px;
-}
-.message__content {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 8px;
-}
-.message__image {
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
-  border-radius: 50%;
-}
-.message__nickname {
-  font-weight: 700;
-  color: var(--main-color);
-  &:hover {
-    cursor: pointer;
-    text-decoration: underline;
+
+  .content {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .image {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  .nickname {
+    font-weight: 700;
+    color: var(--main-color);
+    &:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+  .text {
+    font-size: 14px;
+    word-wrap: break-word;
+    word-break: break-all;
   }
 }
-.message__text {
-  font-size: 14px;
-  word-wrap: break-word;
-  word-break: break-all;
+.websocket-page {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 16px;
+}
+.websocket-page__content {
+  width: 100%;
+}
+.websocket-page__users {
+  padding: 16px;
+  border: 3px solid var(--main-color);
+  border-radius: 8px;
+  align-self: flex-start;
 }
 

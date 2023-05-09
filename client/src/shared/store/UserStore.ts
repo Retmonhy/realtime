@@ -4,7 +4,7 @@ import { UserService } from "../api/services";
 
 export class UserStore {
   error: string | null = null;
-  isLoading: boolean = false;
+  isLoading: boolean = true;
   id: string = "";
   nickname: string = "";
   picture: string = "";

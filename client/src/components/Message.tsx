@@ -5,16 +5,15 @@ interface IMessageProps {
 }
 
 export const Message: FC<IMessageProps> = ({ message }) => {
-  console.log("message = ", message);
   return (
     <div className='message'>
-      <div className='message__content'>
-        <div className='message__image'>
-          <img className='message__image' src={message.user.picture} />
+      <div className='content'>
+        <div className='image'>
+          <img className='image' src={message.user.picture} />
         </div>
         <div>
-          <p className='message__nickname'>{message.user.nickname}</p>
-          <p className='message__text'>{message.text}</p>
+          <p className='nickname'>{message.user.nickname}</p>
+          <p className='text'>{message.text}</p>
         </div>
       </div>
     </div>
