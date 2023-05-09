@@ -30,8 +30,8 @@ export const EventSoursing: FC<IEventSoursingProps> = () => {
   };
   return (
     <>
-      <MessageForm onSend={sendMessage} />
       <Chat messages={messages} />
+      <MessageForm onSend={sendMessage} />
     </>
   );
 };

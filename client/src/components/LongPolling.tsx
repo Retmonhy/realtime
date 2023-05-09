@@ -34,8 +34,8 @@ export const LongPolling: FC<ILongPollingProps> = () => {
   };
   return (
     <>
-      <MessageForm onSend={sendMessage} />
       <Chat messages={messages} />
+      <MessageForm onSend={sendMessage} />
     </>
   );
 };

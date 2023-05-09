@@ -14,8 +14,8 @@ export const App = observer(() => {
   return (
     <div className='container'>
       {/* {user.isLoading ? <h3>Создаем ваш анонимный профиль, пожалуйста, подождите</h3> : <LongPolling />} */}
-      {/* {user.isLoading ? <h3>Создаем ваш анонимный профиль, пожалуйста, подождите</h3> : <EventSoursing />} */}
-      {user.isLoading ? <h3>Создаем ваш анонимный профиль, пожалуйста, подождите</h3> : <WebSock />}
+      {user.isLoading ? <h3>Создаем ваш анонимный профиль, пожалуйста, подождите</h3> : <EventSoursing />}
+      {/* {user.isLoading ? <h3>Создаем ваш анонимный профиль, пожалуйста, подождите</h3> : <WebSock />} */}
     </div>
   );
 });
